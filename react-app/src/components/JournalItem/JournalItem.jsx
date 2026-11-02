@@ -1,21 +1,28 @@
 import './JournalItem.css';
 
-function JournalItem({title, text, date}){
-    const formatedDate = date
-        ? new Intl.DateTimeFormat('ru-RU').format(date)
-        : '';
+function formatDate(date) {
+  if (!date) return '';
+  const parsed = new Date(`${date}T00:00:00`);
+  return new Intl.DateTimeFormat('ru-RU').format(parsed);
+}
 
-    return (
-        <>
-            <h2 className='journal-item__header'>{title}</h2>
-            {date && (
-                <h2 className='journal-item__body'>
-                    <div className='journal-item__date'>{formatedDate}</div>
-                    <div className='journal-item__text'>{text}</div>
-                </h2>
-            )}
-        </>
-    );
+function JournalItem({ item, selected, onClick }) {
+  const preview = item.post.replace(/\\s+/g, ' ').trim();
+
+  return (
+    <button
+      className={`journal-item ${selected ? 'journal-item--selected' : ''}`}
+      type="button"
+      onClick={onClick}
+    >
+      <span className="journal-item__title">{item.title}</span>
+      <span className="journal-item__meta">
+        <span><span className="journal-item__icon">▦</span>{formatDate(item.date)}</span>
+        {item.tag && <span><span className="journal-item__icon">◇</span>{item.tag}</span>}
+      </span>
+      <span className="journal-item__preview">{preview || 'Нет текста заметки'}</span>
+    </button>
+  );
 }
 
 export default JournalItem;

@@ -1,10 +1,11 @@
+import './Header.css';
+
 function Header() {
-    return (
-        <header>
-            <h1>Заголовок</h1>
-            <p>Какой-то текст</p>
-        </header>
-    );
+  return (
+    <header className="journal-header">
+      <h1>Personal Journal</h1>
+    </header>
+  );
 }
 
 export default Header;
